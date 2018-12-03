@@ -9,6 +9,8 @@ package com.mycompany.bankproject;
  *
  * @author x15015556
  */
+import com.google.gson.Gson;
+import static java.awt.SystemColor.info;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,6 +30,8 @@ import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 @Path("/customers")
 public class CustomerService {
@@ -38,6 +42,7 @@ public class CustomerService {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
         entityManager = emfactory.createEntityManager();
     }
+    
 
 //    @GET
 //    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -57,6 +62,7 @@ public class CustomerService {
     cc.setMaxAge(10000);
     System.out.println("\n\n\n\n+go");
     return Response.ok("Some Data").cacheControl(cc).build();
+    
 }
 
     @GET
@@ -98,7 +104,32 @@ public class CustomerService {
         return test;
     }
      
-
+    
+//    @GET
+//    @Path("/save")
+//    @Produces("application/json")
+//    public Response save(@Context UriInfo info){
+//        Gson gson = new Gson();
+//        
+//        String first_name = info.getQueryParameters().getFirst("first_name");
+//        String last_name = info.getQueryParameters().getFirst("last_name");
+//        String address = info.getQueryParameters().getFirst("address");
+//        String phone_number = info.getQueryParameters().getFirst("phone_number");
+//        String email = info.getQueryParameters().getFirst("email");
+//        String inputted_password = info.getQueryParameters().getFirst("inputted_password");
+//        String encrypted_password = info.getQueryParameters().getFirst("encrypted_password");
+//        boolean verification = Boolean.parseBoolean(info.getQueryParameters().getFirst("verification"));
+//        int pin = Integer.parseInt(info.getQueryParameters().getFirst("pin"));
+//        String status = "ok";
+//        
+//        
+//
+//        BankCustomer bc = new BankCustomer();
+//        System.out.println("");
+//
+//       return Response.status(200).entity(gson.toJson(bc)).build();
+//       
+//    }
     
     @POST
     @Path("/save")
@@ -112,7 +143,7 @@ public class CustomerService {
         entityManager.getTransaction().commit();
         
         entityManager.close();
-//        entityManager.close();
+        entityManager.close();
 
         return Response.status(200).entity(c).build();
     }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Add new Customer</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <script>
+(function() {
+	function toJSONString( form ) {
+		var obj = {};
+		var elements = form.querySelectorAll( "first_name, last_name, address, phone_number, password1, inputted_password, encrypted_password, verification, pin" );
+		for( var i = 0; i < elements.length; ++i ) {
+			var element = elements[i];
+			var name = element.name;
+			var value = element.value;
+
+			if( name ) {
+				obj[ name ] = value;
+			}
+		}
+
+		return JSON.stringify( obj );
+	}
+
+	document.addEventListener( "DOMContentLoaded", function() {
+		var form = document.getElementById( "addCustomer" );
+		var output = document.getElementById( "output" );
+		form.addEventListener( "submit", function( e ) {
+			e.preventDefault();
+			var json = toJSONString( this );
+			output.innerHTML = json;
+
+		}, false);
+
+	});
+
+})();
+</script>
+    <body>
+        <h1>Bank Management - Add new Customer</h1>
+        <h3>Please complete of the following:</h3>
+    <form action="/api/customers/save" name="addCustomer" method="post">
+            First Name:<br>
+            <input type="text" name ="first_name">
+            <br>
+            Last Name<br>
+            <input type="text" name="last_name">
+            <br>
+            Address:<br>
+            <input type="text" name="address">
+            <br>
+            Phone number:<br>
+            <input type="text" name="phone_number">
+            <br>
+            Email:<br>
+            <input type="text" name="email">
+            <br>
+            Password:<br>
+            <input type="password" name="password1">
+            <br>
+            Confirm Password:<br>
+            <input type="password" name="inputted_password">
+
+            
+            <input type="text" name="encrypted_password" value="BLOB" hidden>
+            <input type="text" name="verification" value="false" hidden>
+            <input type="text" name="pin" value="1234" hidden>
+            
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

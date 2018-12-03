@@ -40,10 +40,25 @@ public class BankCustomer implements Serializable {
     private String status;
     private boolean verification; 
     private int pin;
+  
     
+//        BankCustomer(String first_name, String last_name, String address, String email, String phone_number, String inputted_password, String status, boolean verification, int pin) {
+//            
+//        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
+//        EntityManager entitymanager = emfactory.createEntityManager();
+//        entitymanager.getTransaction().begin();
+//        
+//        this.first_name = first_name;
+//        this.last_name = last_name;
+//        this.address = address;
+//        this.email = email;
+//        this.phone_number = phone_number;
+//        this.inputted_password = inputted_password;
+//        this.status = status;
+//        this.verification = verification;
+//        this.pin = pin;
+//    }
     
-    
-
 
 public static void main(String[] args) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
@@ -58,6 +73,8 @@ public static void main(String[] args) {
         entitymanager.close();
         emfactory.close();
     }
+
+
 
     public int getCustomer_id() {
         return customer_id;
