@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Persistence;
 import javax.persistence.Table;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -23,7 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table
-@XmlRootElement
+@Produces(MediaType.APPLICATION_JSON)
+//@XmlRootElement
 public class BankAccount implements Serializable  {
     
     @Id
@@ -32,8 +35,9 @@ public class BankAccount implements Serializable  {
     private String sort_code;
     private String account_number;
     private String current_balance;
-    private String account_type;
+    private String type;
     private int customer_id;
+    private String status;
 
     public String getAccount_number() {
         return account_number;
@@ -68,12 +72,12 @@ public class BankAccount implements Serializable  {
         this.current_balance = current_balance;
     }
 
-    public String getAccount_type() {
-        return account_type;
+    public String getType() {
+        return type;
     }
 
-    public void setAccount_type(String account_type) {
-        this.account_type = account_type;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getCustomer_id() {
@@ -89,13 +93,21 @@ public class BankAccount implements Serializable  {
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
-        BankAccount cust = new BankAccount();
+        BankAccount account = new BankAccount();
 
-        entitymanager.persist(cust);
+        entitymanager.persist(account);
 
         entitymanager.getTransaction().commit();
         entitymanager.close();
         emfactory.close();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

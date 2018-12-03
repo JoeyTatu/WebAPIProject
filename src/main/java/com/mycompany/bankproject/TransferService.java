@@ -5,6 +5,11 @@
  */
 package com.mycompany.bankproject;
 
+/**
+ *
+ * @author x15015556
+ */
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,50 +29,56 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- *
- * @author suren
- */
-@Path("/customers/{customer_id}/accounts/{account_id}/transactions")
-public class TransactionService {
-
+@Path("customers/{customer_id}/accounts/{account_id}/bank_transfers")
+public class TransferService {
+    
     EntityManager entityManager;
-
-    public TransactionService() {
+    
+    public TransferService (){
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
         entityManager = emfactory.createEntityManager();
     }
 
+//    @GET
+//    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    public Response getPlanets() {
+//  
+//        List<Planet> list = allEntries();
+//
+//        return Response.ok(list).build();
+//    
+//    }
+//    
+    
     @GET
     @Path("bank")
     public Response get() {
-        CacheControl cc = new CacheControl();
-        cc.setMaxAge(10000);
-        System.out.println("\n\n\n\n+go");
-        return Response.ok("Some Data").cacheControl(cc).build();
-    }
+    CacheControl cc = new CacheControl();
+    cc.setMaxAge(10000);
+    System.out.println("\n\n\n\n+go");
+    return Response.ok("Some Data").cacheControl(cc).build();
+}
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getTransactions() {
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response getTransfers() {
+  
+        List<BankTransfer> list = allEntries();
 
-        List<BankTransaction> list = allEntries();
-
-        GenericEntity entity = new GenericEntity<List<BankTransaction>>(list) {
-        };
+        GenericEntity entity = new GenericEntity<List<BankTransfer>>(list){};
         return Response.ok(entity).build();
-
+    
     }
-
-    public List<BankTransaction> allEntries() {
+    
+     public List<BankTransfer> allEntries() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<BankTransaction> cq = cb.createQuery(BankTransaction.class);
-        Root<BankTransaction> rootEntry = cq.from(BankTransaction.class);
-        CriteriaQuery<BankTransaction> all = cq.select(rootEntry);
-        TypedQuery<BankTransaction> allQuery = entityManager.createQuery(all);
+        CriteriaQuery<BankTransfer> cq = cb.createQuery(BankTransfer.class);
+        Root<BankTransfer> rootEntry = cq.from(BankTransfer.class);
+        CriteriaQuery<BankTransfer> all = cq.select(rootEntry);
+        TypedQuery<BankTransfer> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
     }
-
+     
 //    @GET
 //    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 //    @Path("{id}")
@@ -75,33 +86,34 @@ public class TransactionService {
 //        Planet test = entityManager.find(Planet.class, id);
 //        return test;
 //    }
+     
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("{transaction_id}")
-    public BankTransaction getTransaction(@PathParam("transaction_id") int transaction_id) {
-        BankTransaction test = entityManager.find(BankTransaction.class, transaction_id);
-        if (test == null) {
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Path("{bank_transfer_id}")
+    public BankTransfer getTransfer(@PathParam("bank_transfer_id") int bank_transfer_id) {
+        BankTransfer test = entityManager.find(BankTransfer.class, bank_transfer_id);
+        if (test == null){
             throw new NotFoundException("You dun goofed");
         }
         return test;
     }
+     
 
+    
     @POST
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response save(BankTransaction c) {
+    public Response save(BankTransfer c) {
         System.out.println(c);
         entityManager.getTransaction().begin();
 
         entityManager.persist(c);
         entityManager.getTransaction().commit();
-
+        
         entityManager.close();
 //        entityManager.close();
 
         return Response.status(200).entity(c).build();
     }
 }
-
-

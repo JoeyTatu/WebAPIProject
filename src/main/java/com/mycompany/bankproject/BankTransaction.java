@@ -27,14 +27,32 @@ public class BankTransaction implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private int transaction_id;
-    private String date;
-    private String type;
-    private String amount;
-    private String post_description;
-    private String description;
+    private String transaction_ref;
+    private int customer_id;
     private int account_id;
+    private String account_number;
+    private int lodgement_id;
+    private int withdrawal_id;
+    private int bank_transfer_id;
+    private double balance;
+    private double debit_amount;
+    private double credit_amount;
+
+    
+    public static void main(String[] args) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        entitymanager.getTransaction().begin();
+
+        BankTransaction transaction = new BankTransaction();
+
+        entitymanager.persist(transaction);
+
+        entitymanager.getTransaction().commit();
+        entitymanager.close();
+        emfactory.close();
+    }
 
     public int getTransaction_id() {
         return transaction_id;
@@ -44,44 +62,20 @@ public class BankTransaction implements Serializable {
         this.transaction_id = transaction_id;
     }
 
-    public String getDate() {
-        return date;
+    public String getTransaction_ref() {
+        return transaction_ref;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTransaction_ref(String transaction_ref) {
+        this.transaction_ref = transaction_ref;
     }
 
-    public String getType() {
-        return type;
+    public int getCustomer_id() {
+        return customer_id;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public String getPost_description() {
-        return post_description;
-    }
-
-    public void setPost_description(String post_description) {
-        this.post_description = post_description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCustomer_id(int customer_id) {
+        this.customer_id = customer_id;
     }
 
     public int getAccount_id() {
@@ -92,18 +86,60 @@ public class BankTransaction implements Serializable {
         this.account_id = account_id;
     }
 
-    public static void main(String[] args) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
-        EntityManager entitymanager = emfactory.createEntityManager();
-        entitymanager.getTransaction().begin();
+    public String getAccount_number() {
+        return account_number;
+    }
 
-        BankTransaction cust = new BankTransaction();
+    public void setAccount_number(String account_number) {
+        this.account_number = account_number;
+    }
 
-        entitymanager.persist(cust);
+    public int getLodgement_id() {
+        return lodgement_id;
+    }
 
-        entitymanager.getTransaction().commit();
-        entitymanager.close();
-        emfactory.close();
+    public void setLodgement_id(int lodgement_id) {
+        this.lodgement_id = lodgement_id;
+    }
+
+    public int getWithdrawal_id() {
+        return withdrawal_id;
+    }
+
+    public void setWithdrawal_id(int withdrawal_id) {
+        this.withdrawal_id = withdrawal_id;
+    }
+
+    public int getBank_transfer_id() {
+        return bank_transfer_id;
+    }
+
+    public void setBank_transfer_id(int bank_transfer_id) {
+        this.bank_transfer_id = bank_transfer_id;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public double getDebit_amount() {
+        return debit_amount;
+    }
+
+    public void setDebit_amount(double debit_amount) {
+        this.debit_amount = debit_amount;
+    }
+
+    public double getCredit_amount() {
+        return credit_amount;
+    }
+
+    public void setCredit_amount(double credit_amount) {
+        this.credit_amount = credit_amount;
     }
 
 }

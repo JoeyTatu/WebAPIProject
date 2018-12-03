@@ -29,7 +29,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/accounts")
+@Path("customers/{customer_id}/accounts")
 public class AccountService {
     
     EntityManager entityManager;
