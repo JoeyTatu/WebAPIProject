@@ -37,11 +37,23 @@ public class BankCustomer implements Serializable {
     private String email;
     private String phone_number;
     private String inputted_password;
-    private String status;
-    private boolean verification; 
-    private int pin;
-  
-    
+
+    public BankCustomer() {
+    }
+
+    public BankCustomer(int customer_id, String first_name, String last_name, String address, String email, String phone_number, String inputted_password) {
+        this.customer_id = customer_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.address = address;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.inputted_password = inputted_password;
+    }
+
+    // private String status;
+    // private boolean verification; 
+    // private int pin;
 //        BankCustomer(String first_name, String last_name, String address, String email, String phone_number, String inputted_password, String status, boolean verification, int pin) {
 //            
 //        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
@@ -58,9 +70,7 @@ public class BankCustomer implements Serializable {
 //        this.verification = verification;
 //        this.pin = pin;
 //    }
-    
-
-public static void main(String[] args) {
+    public static void main(String[] args) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
@@ -73,8 +83,6 @@ public static void main(String[] args) {
         entitymanager.close();
         emfactory.close();
     }
-
-
 
     public int getCustomer_id() {
         return customer_id;
@@ -131,7 +139,7 @@ public static void main(String[] args) {
     public void setInputted_password(String inputted_password) {
         this.inputted_password = inputted_password;
     }
-
+    /*
     public String getStatus() {
         return status;
     }
@@ -156,5 +164,12 @@ public static void main(String[] args) {
         this.pin = pin;
     }
 
-   
+     */
+
+    @Override
+    public String toString() {
+        return "BankCustomer{" + "customer_id=" + customer_id + ", first_name=" + first_name + ", last_name=" + last_name + ", address=" + address + ", email=" + email + ", phone_number=" + phone_number + ", inputted_password=" + inputted_password + '}';
+    }
+    
+    
 }

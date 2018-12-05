@@ -102,13 +102,13 @@ public class CustomerService {
         return test;
     }
 
-    @POST
+    @GET
     @Path("/save")
-   //@Consumes(MediaType.APPLICATION_JSON)
+   // @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
+   
     public Response save(@Context UriInfo info) {
-        BankCustomer bc = new BankCustomer();
-
+  	
         String first_name = info.getQueryParameters().getFirst("first_name");
         String last_name = info.getQueryParameters().getFirst("last_name");
         String address = info.getQueryParameters().getFirst("address");
@@ -119,7 +119,7 @@ public class CustomerService {
         // boolean verification = Boolean.parseBoolean(info.getQueryParameters().getFirst("verification"));
 //        int pin = Integer.parseInt(info.getQueryParameters().getFirst("pin"));
 //        String status = "ok";
-
+        BankCustomer bc = new BankCustomer();
        
         bc.setFirst_name(first_name);
         bc.setLast_name(last_name);
@@ -127,13 +127,8 @@ public class CustomerService {
         bc.setPhone_number(phone_number);
         bc.setEmail(email);
         bc.setInputted_password(inputted_password);
-        bc.getFirst_name();
-        bc.getLast_name();
-        bc.getEmail();
-        bc.getAddress();
-        bc.getPhone_number();
-        bc.getInputted_password();
-
+        
+        System.out.println(bc);
         entityManager.getTransaction().begin();
 
         entityManager.persist(bc);
@@ -144,7 +139,11 @@ public class CustomerService {
         return Response.status(200).entity(bc).build();
 
     }
-/*
+    
+    
+
+
+    /*
     @POST
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
