@@ -1,14 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<actions>
-        <action>
-            <actionName>run</actionName>
-            <packagings>
-                <packaging>war</packaging>
-                <packaging>ear</packaging>
-                <packaging>ejb</packaging>
-            </packagings>
-            <goals>
-                <goal>jetty:run</goal>
-            </goals>
-        </action>
-    </actions>
+version https://git-lfs.github.com/spec/v1
+oid sha256:8a989618ee173cf460749aa907052eb15c3478d773f20fe0d3a6ea9d35967847
+size 414

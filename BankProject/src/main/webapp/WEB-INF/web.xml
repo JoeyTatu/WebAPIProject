@@ -1,26 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	 version="3.1">
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
-    
-    <servlet>
-        <servlet-name>rest</servlet-name>
-        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.mycompany.bankproject</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>rest</servlet-name>
-        <url-pattern>api/*</url-pattern>
-    </servlet-mapping>
-    
-</web-app>
+version https://git-lfs.github.com/spec/v1
+oid sha256:273e2dd3ddd966ce6cd7a36a8ff60a3af53ad8c26346a547de180ba60c9f541a
+size 900
