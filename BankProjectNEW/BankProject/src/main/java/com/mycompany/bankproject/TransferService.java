@@ -36,12 +36,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-@Path("customers/{customer_id}/accounts/{account_id}/bank_transfers")
+@Path("/customers/{customer_id}/accounts/{account_id}/bank_transfers")
 public class TransferService {
-    
+
     EntityManager entityManager;
-    
-    public TransferService (){
+
+    public TransferService() {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test-connection");
         entityManager = emfactory.createEntityManager();
     }
@@ -56,28 +56,41 @@ public class TransferService {
 //    
 //    }
 //    
-    
     @GET
     @Path("bank")
     public Response get() {
-    CacheControl cc = new CacheControl();
-    cc.setMaxAge(10000);
-    System.out.println("\n\n\n\n+go");
-    return Response.ok("Some Data").cacheControl(cc).build();
-}
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(10000);
+        System.out.println("\n\n\n\n+go");
+        return Response.ok("Some Data").cacheControl(cc).build();
+    }
 
     @GET
-    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getTransfers() {
-  
+
         List<BankTransfer> list = allEntries();
 
-        GenericEntity entity = new GenericEntity<List<BankTransfer>>(list){};
+        GenericEntity entity = new GenericEntity<List<BankTransfer>>(list) {
+        };
         return Response.ok(entity).build();
-    
+
     }
-    
-     public List<BankTransfer> allEntries() {
+
+    @GET
+    @Path("/all")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response getAllTransfers() {
+
+        List<BankTransfer> list = allEntries();
+
+        GenericEntity entity = new GenericEntity<List<BankTransfer>>(list) {
+        };
+        return Response.ok(entity).build();
+
+    }
+
+    public List<BankTransfer> allEntries() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<BankTransfer> cq = cb.createQuery(BankTransfer.class);
         Root<BankTransfer> rootEntry = cq.from(BankTransfer.class);
@@ -85,7 +98,7 @@ public class TransferService {
         TypedQuery<BankTransfer> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
     }
-     
+
 //    @GET
 //    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 //    @Path("{id}")
@@ -93,29 +106,38 @@ public class TransferService {
 //        Planet test = entityManager.find(Planet.class, id);
 //        return test;
 //    }
-     
     @GET
-    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{bank_transfer_id}")
     public BankTransfer getTransfer(@PathParam("bank_transfer_id") int bank_transfer_id) {
         BankTransfer test = entityManager.find(BankTransfer.class, bank_transfer_id);
-        if (test == null){
+        if (test == null) {
             throw new NotFoundException();
         }
         return test;
     }
-     
 
-    
-   @GET
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Path("/search")
+    public BankTransfer getSearchTransfer(@Context UriInfo info) {
+        int bank_transfer_id = Integer.parseInt(info.getQueryParameters().getFirst("bank_transfer_id"));
+
+        BankTransfer test = entityManager.find(BankTransfer.class, bank_transfer_id);
+        if (test == null) {
+            throw new NotFoundException();
+        }
+        return test;
+    }
+
+    @GET
     @Path("/save")
     //@Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON})
-   
-        public Response save(@Context UriInfo info) {
+
+    public Response save(@Context UriInfo info) {
 
         BankTransfer bt = new BankTransfer();
-        
 
         int customer_id = Integer.parseInt(info.getQueryParameters().getFirst("customer_id"));
         int account_id = Integer.parseInt(info.getQueryParameters().getFirst("account_id"));
@@ -127,11 +149,11 @@ public class TransferService {
 //        {
 //            card_encryption = card_encryption + to_card.charAt(i);
 //        }
-       
+
         byte[] array = new byte[7]; // length is bounded by 7
         new Random().nextBytes(array);
         String transaction_ref = new String(array, Charset.forName("UTF-8"));
-    
+
         double amount = Double.parseDouble(info.getQueryParameters().getFirst("amount"));
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -163,6 +185,90 @@ public class TransferService {
 //        entityManager.close();
 
         return Response.status(200).entity(bt).build();
+
+    }
+
+    //@ref: https://www.objectdb.com/java/jpa/persistence/update
+    //@ref: https://thoughts-on-java.org/persist-save-merge-saveorupdate-whats-difference-one-use/
+    //@ref: https://stackoverflow.com/questions/8307578/what-is-the-best-way-to-update-the-entity-in-jpa
+    @GET
+    @Path("/update")
+    //@Consumes(MediaType.APPLICATION_JSON)
+    //@Produces({MediaType.APPLICATION_JSON})
+
+    public Response update(@Context UriInfo info) {
+
+        int bank_transfer_id = Integer.parseInt(info.getQueryParameters().getFirst("bank_transfer_id"));
+        int customer_id = Integer.parseInt(info.getQueryParameters().getFirst("customer_id"));
+        int account_id = Integer.parseInt(info.getQueryParameters().getFirst("account_id"));
+        int transaction_id = 0;
+        String to_sort_code = info.getQueryParameters().getFirst("to_sort_code");
+        String to_account = info.getQueryParameters().getFirst("to_account");
+        double amount = Double.parseDouble(info.getQueryParameters().getFirst("amount"));
+
+        BankTransfer removedTransfer = entityManager.find(BankTransfer.class, bank_transfer_id);
+        if (removedTransfer == null) {
+            throw new NotFoundException();
+        }
+
+        String transaction_ref = removedTransfer.getTransacrion_ref();
+        String date = removedTransfer.getDate();
+        String time = removedTransfer.getTime();
+        boolean verified = removedTransfer.isVerified();
+
+        BankTransfer newTransfer = removedTransfer;
+
+        entityManager.getTransaction().begin();
+
+        newTransfer.setCustomer_id(customer_id);
+        newTransfer.setAccount_id(account_id);
+        newTransfer.setTransaction_id(transaction_id);
+        newTransfer.setTo_sort_code(to_sort_code);
+        newTransfer.setTo_account(to_account);
+        newTransfer.setTransacrion_ref(transaction_ref);
+        newTransfer.setAmount(amount);
+        newTransfer.setDate(date);
+        newTransfer.setTime(time);
+        newTransfer.setVerified(verified);
+
+        entityManager.remove(removedTransfer);
+        entityManager.persist(newTransfer);
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+//        entityManager.close();
+
+        String message = "Record updated";
+        return Response.status(200).entity(message).build();
+
+    }
+
+    //@ref: https://www.objectdb.com/java/jpa/persistence/update
+    //@ref: https://thoughts-on-java.org/persist-save-merge-saveorupdate-whats-difference-one-use/
+    //@ref: https://stackoverflow.com/questions/8307578/what-is-the-best-way-to-update-the-entity-in-jpa
+    @GET
+    @Path("/delete")
+    //@Consumes(MediaType.APPLICATION_JSON)
+    //@Produces({MediaType.APPLICATION_JSON})
+
+    public Response delete(@Context UriInfo info) {
+
+        int bank_transfer_id = Integer.parseInt(info.getQueryParameters().getFirst("bank_transfer_id"));
+
+        BankTransfer transfer = entityManager.find(BankTransfer.class, bank_transfer_id);
+        if (transfer == null) {
+            throw new NotFoundException();
+        }
+
+        entityManager.getTransaction().begin();
+        entityManager.remove(transfer);
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+//        entityManager.close();
+
+        String message = "Record deleted";
+        return Response.status(200).entity(message).build();
 
     }
 }

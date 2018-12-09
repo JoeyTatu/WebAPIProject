@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Search Withdrawals</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+   //         $("#customerForm").submit(function(event) {
+   //             event.preventDefault();
+   //             $.ajax({
+   //               type: "GET",
+   //               url: "http://localhost:8080/customers/" + $("#customer_id").val(),
+   //             }).done(function(response) {
+   //               console.log(response);
+   //             }).fail(jqXHR, textStatus) {
+   //               alert( "Request failed: " + textStatus );
+   //             });
+   //         });
+        </script>
+
+    </head>
+    <body>
+
+        <h1>Search withdrawals</h1>
+        <h3>Please complete of the following:</h3>
+        <form action="http://localhost:8080/api/customers/{customer_id}/accounts/{account_id}/withdrawals/search" id="customerFormupdate" method="GET">
+
+            Withdrawal ID: (int) <br>
+            <input type="text" name ="withdrawal_id" value="">
+            <br>
+            <input  onclick="" type="submit" value="Search">
+            <br><br>
+        </form>
+    </body>

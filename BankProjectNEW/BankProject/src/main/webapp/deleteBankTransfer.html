@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Delete Bank Transfer</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+   //         $("#customerForm").submit(function(event) {
+   //             event.preventDefault();
+   //             $.ajax({
+   //               type: "GET",
+   //               url: "http://localhost:8080/customers/" + $("#customer_id").val(),
+   //             }).done(function(response) {
+   //               console.log(response);
+   //             }).fail(jqXHR, textStatus) {
+   //               alert( "Request failed: " + textStatus );
+   //             });
+   //         });
+        </script>
+
+    </head>
+    <body>
+
+        <h1>Delete Bank Transfer</h1>
+        <h3>Please complete of the following:</h3>
+        <form action="http://localhost:8080/api/customers/{customer_id}/accounts/{account_id}/bank_transfers/delete" id="customerFormupdate" method="GET">
+
+            Bank Transfer ID: (int) <br>
+            <input type="text" name ="bank_transfer_id" value="">
+            <br>
+            <input  onclick="" type="submit" value="Delete">
+            <br><br>
+        </form>
+    </body>
+</html>

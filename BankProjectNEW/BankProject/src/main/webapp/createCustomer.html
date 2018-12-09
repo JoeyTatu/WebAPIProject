@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Create new Customer</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            a.button {
+                -webkit-appearance: button;
+                -moz-appearance: button;
+                appearance: button;
+
+                text-decoration: none;
+                color: initial;
+            }
+        </style>
+    </head>
+    <body>
+
+        
+        <h3>Create customer</h3>
+        <form action="http://localhost.com:8080/api/customers/save"  method="get">
+
+
+            First Name: (String)<br>
+            <input type="text" name ="first_name" value="">
+            <br>
+            Last Name: (String)<br>
+            <input type="text" name="last_name" value="">
+            <br>
+            Address: (String)<br>
+            <input type="text" name="address" value="">
+            <br>
+            Phone number: (String)<br>
+            <input type="text" name="phone_number" value="">
+            <br>
+            Email: (String)<br>
+            <input type="text" name="email" value="">
+            <br>
+            Password: (String)<br>
+            <input type="password" name="inputted_password" value="">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Update Account</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+   //         $("#customerForm").submit(function(event) {
+   //             event.preventDefault();
+   //             $.ajax({
+   //               type: "GET",
+   //               url: "http://localhost:8080/customers/" + $("#customer_id").val(),
+   //             }).done(function(response) {
+   //               console.log(response);
+   //             }).fail(jqXHR, textStatus) {
+   //               alert( "Request failed: " + textStatus );
+   //             });
+   //         });
+        </script>
+
+    </head>
+    <body>
+
+                <h1>Update account details</h1>
+        <h3>Please complete of the following:</h3>
+        <form action="http://localhost:8080/api/customers/{customer_id}/accounts/update" id="customerFormupdate" method="GET">
+            <b><u><font color="red">All fields required</font></u></b>
+            <br>
+            Account ID: (int) <br>
+            <input type="text" name ="update_account_id" value="">
+            <br>
+            Sort Code: (String) <br>
+            <input type="text" name ="update_sort_code" value="">
+            <br>
+            Account_Number (String)<br>
+            <input type="text" name="update_account_number" value="">
+            <br>
+            Current balance: (double)<br>
+            <input type="text" name="update_current_balance" value="">
+            <br>
+            Account Type:<br>
+            <select name="update_type">
+                <option value="Current">Current</option>
+                <option value="Savings">Savings</option>
+                <option value="Student">Student</option>
+            </select> 
+            <br>
+            Customer ID: (int)<br>
+            <input type="text" name="update_customer_id" value="">
+            <br>
+            <input  onclick="" type="submit" value="Update">
+        </form>
+    </body>
+</html>

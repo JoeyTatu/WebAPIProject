@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>View all customers</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+   //         $("#customerForm").submit(function(event) {
+   //             event.preventDefault();
+   //             $.ajax({
+   //               type: "GET",
+   //               url: "http://localhost:8080/customers/" + $("#customer_id").val(),
+   //             }).done(function(response) {
+   //               console.log(response);
+   //             }).fail(jqXHR, textStatus) {
+   //               alert( "Request failed: " + textStatus );
+   //             });
+   //         });
+        </script>
+
+    </head>
+    <body>
+        <h1>View Customers</h1>
+        <form action="http://localhost:8080/api/customers/all" id="customerForm" method="get">
+
+            <input  onclick="" type="submit" value="View All">
+        </form>
+        
+    </body>
+</html>

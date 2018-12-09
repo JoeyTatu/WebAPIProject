@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Update Customer</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+   //         $("#customerForm").submit(function(event) {
+   //             event.preventDefault();
+   //             $.ajax({
+   //               type: "GET",
+   //               url: "http://localhost:8080/customers/" + $("#customer_id").val(),
+   //             }).done(function(response) {
+   //               console.log(response);
+   //             }).fail(jqXHR, textStatus) {
+   //               alert( "Request failed: " + textStatus );
+   //             });
+   //         });
+        </script>
+
+    </head>
+    <body>
+
+                <h1>Update Customer details</h1>
+        <h3>Please complete of the following:</h3>
+        <form action="http://localhost:8080/api/customers/update" id="customerFormupdate" method="GET">
+            <b><u><font color="red">All fields required</font></u></b>
+            <br>
+            Customer ID: (int) <br>
+            <input type="text" name ="customer_id" value="">
+            <br>
+            First Name: (String) <br>
+            <input type="text" name ="first_name" value="">
+            <br>
+            Last Name: (String) <br>
+            <input type="text" name ="last_name" value="">
+            <br>
+            Address (String)<br>
+            <input type="text" name="address" value="">
+            <br>
+            Phone Number (String)<br>
+            <input type="text" name="phone_number" value="">
+            <br>
+            Email (String)<br>
+            <input type="text" name="email" value="">
+            <br>
+            Password (String)<br>
+            <input type="password" name="inputted_password" value="">
+            <br>
+            <input  onclick="" type="submit" value="Update">
+        </form>
+    </body>
+</html>
